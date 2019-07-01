@@ -1,0 +1,73 @@
+#!/bin/bash
+
+SECONDS_IN_HOUR=3600
+SECONDS_IN_MIN=60
+MIN_IN_POMODORO=25
+
+# function run when the pomodoro finishes
+function exitHook() {
+    echo 'done!'
+}
+
+# takes seconds, prints time in HH:MM:SS
+function prettyPrintTime() {
+    if [[ $# != 1 ]]; then
+	echo "internal error: prettyPrintTime passed wrong number of args"
+    fi
+
+    seconds=$1
+
+    hours=`expr $seconds / $SECONDS_IN_HOUR`
+    seconds=`expr $seconds - $hours \* $SECONDS_IN_HOUR`
+
+    minutes=`expr $seconds / $SECONDS_IN_MIN`
+    seconds=`expr $seconds - $minutes \* $SECONDS_IN_MIN`
+
+    printf '\r%02d:%02d:%02d' $hours $minutes $seconds
+}
+
+function testprettyPrintTime() {
+    echo 'pretty printing 4147 seconds:'
+    prettyPrintTime 4147
+    echo
+
+    echo 'pretty printing 202324 seconds:'
+    prettyPrintTime 202324
+    echo
+
+    echo 'pretty printing 1 second:'
+    prettyPrintTime 1
+    echo
+
+    echo 'pretty printing 0 seconds:'
+    prettyPrintTime 0
+    echo
+}
+
+# MAIN
+
+# set seconds
+if [[ $# == 0 ]]; then
+    secondsRemaining=`expr $MIN_IN_POMODORO \* $SECONDS_IN_MIN`
+elif [[ $# == 1 ]]; then
+    secondsRemaining=`expr $1 \* $SECONDS_IN_MIN`
+elif [[ $# == 2 ]]; then
+    secondsRemaining=`expr $1 \* $SECONDS_IN_MIN + $2`
+elif [[ $# == 3 ]]; then
+    secondsRemaining=`expr $1 \* $SECONDS_IN_HOUR + $2 \* $SECONDS_IN_MIN + $3`
+else
+    echo 'error: invalid number of arguments given'
+    exit
+fi
+
+while [[ $secondsRemaining -gt 0 ]]; do
+    prettyPrintTime $secondsRemaining
+    
+    secondsRemaining=`expr $secondsRemaining - 1`
+    sleep 1
+done
+
+prettyPrintTime $secondsRemaining
+echo
+
+exitHook
