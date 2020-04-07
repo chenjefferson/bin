@@ -1,3 +1,8 @@
 #!/bin/bash
 
-rsync -riv --delete ~/Table jeffe@192.168.1.5:~/
+rsync -amn --stats --delete ~/Table jeffe@192.168.1.5:~/
+
+echo -n 'is this acceptable (^C to exit)? '
+read
+
+rsync -ivam --stats --delete ~/Table jeffe@192.168.1.5:~/
