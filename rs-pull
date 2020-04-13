@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rsync -amn --stats --delete jeffe@192.168.1.5:~/Table ~
+rsync -vamn --stats --delete jeffe@192.168.1.5:~/Table ~
 
 echo -n 'is this acceptable (^C to exit)? '
 read
