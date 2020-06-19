@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo 'PULL STAGE'
+rsync -vamn jeffe@192.168.1.5:~/Table ~
+echo -n 'is this acceptable (^C to exit)? '
+read
+rsync -ivam jeffe@192.168.1.5:~/Table ~
+
+echo 'PUSH STAGE'
+rsync -vamn --stats ~/Table jeffe@192.168.1.5:~/
+echo -n 'is this acceptable (^C to exit)? '
+read
+rsync -ivam --stats ~/Table jeffe@192.168.1.5:~/
