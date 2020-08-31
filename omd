@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# open ${`date %Y.%m.%d`}"\\ Mise.org"
+emacsclient -c -a '' "~/Table/GTD/Mise/"
+
