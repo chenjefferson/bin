@@ -1,0 +1,22 @@
+#!/bin/bash
+
+IN_STOCK=`wget -qO- https://www.roguefitness.com/conditioning/endurance/rowers?is_salable%5B0%5D=1 | grep 'Concept 2 Model D'`
+INTERVAL_IN_MIN=10
+SEC_IN_MIN=60
+
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+while true; do
+  if [ -z "$IN_STOCK" ]; then
+    echo `date` 'not in stock :('
+  else
+    while true; do
+      echo -e `date` "${GREEN}in stock!${NC}"
+      echo -ne '\a'
+      sleep 1
+    done
+  fi
+
+  sleep `expr $INTERVAL_IN_MIN \* $SEC_IN_MIN`
+done
