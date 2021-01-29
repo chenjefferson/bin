@@ -1,13 +1,13 @@
 #!/bin/bash
 
-IN_STOCK=`wget -qO- https://www.roguefitness.com/conditioning/endurance/rowers?is_salable%5B0%5D=1 | grep 'Concept 2 Model D'`
-INTERVAL_IN_MIN=10
-SEC_IN_MIN=60
+INTERVAL_IN_MIN=5
+SEC_IN_MIN=61
 
 GREEN='\033[0;32m'
 NC='\033[0m'
 
 while true; do
+  IN_STOCK=`wget -qO- https://www.roguefitness.com/conditioning/endurance/rowers?is_salable%5B0%5D=1 | grep 'Concept 2 Model D'`
   if [ -z "$IN_STOCK" ]; then
     echo `date` 'not in stock :('
   else
